@@ -2327,6 +2327,12 @@ function applyRoleBasedUI() {
     const isUser = window.currentUserRole === 'user';
     const isSuperadmin = window.currentUserRole === 'superadmin';
 
+     const dangerZone = document.getElementById('danger-zone-card');
+    if (dangerZone) {
+        
+        dangerZone.style.display = isSuperadmin ? 'block' : 'none';
+    }
+
     const settingsTabBtn = document.querySelector('.tab-button[onclick="openTab(\'import-export\')"]');
     if (settingsTabBtn) {
         settingsTabBtn.style.display = 'inline-block';
