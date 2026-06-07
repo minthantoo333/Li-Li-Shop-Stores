@@ -2327,12 +2327,6 @@ function applyRoleBasedUI() {
     const isUser = window.currentUserRole === 'user';
     const isSuperadmin = window.currentUserRole === 'superadmin';
 
-     const dangerZone = document.getElementById('danger-zone-card');
-    if (dangerZone) {
-        
-        dangerZone.style.display = isSuperadmin ? 'block' : 'none';
-    }
-
     const settingsTabBtn = document.querySelector('.tab-button[onclick="openTab(\'import-export\')"]');
     if (settingsTabBtn) {
         settingsTabBtn.style.display = 'inline-block';
@@ -2345,9 +2339,10 @@ function applyRoleBasedUI() {
         settingsCards[2].style.display = isUser ? 'none' : 'block'; 
     }
 
-    const dangerZone = document.querySelector('div[style*="border-top: 2px solid #e74c3c;"]');
+    // --- UPDATED: Hide Danger Zone for both User and Admin (Only Superadmin sees it) ---
+    const dangerZone = document.querySelector('.danger-card') || document.querySelector('div[style*="border-top: 2px solid #e74c3c;"]');
     if (dangerZone) {
-        dangerZone.style.display = isUser ? 'none' : 'block';
+        dangerZone.style.display = isSuperadmin ? 'block' : 'none';
     }
 
     const financeToggleBtn = document.getElementById('toggle-finance-btn');
@@ -2358,5 +2353,13 @@ function applyRoleBasedUI() {
     const createStaffForm = document.getElementById('create-staff-form');
     if (createStaffForm) {
         createStaffForm.style.display = isSuperadmin ? 'block' : 'none';
+    }
+
+    // --- NEW: Always show POS tab for the User role ---
+    if (isUser) {
+        const posTabButton = document.querySelector('.tab-button[onclick="openTab(\'pos-system\')"]');
+        if (posTabButton) {
+            posTabButton.style.display = 'inline-block'; // Forces the tab to remain visible
+        }
     }
 }
